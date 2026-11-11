@@ -1,0 +1,35 @@
+{%load static %}
+<html>
+<title>{%block title%} {%endblock%} </title>
+<body>
+<br>
+{%if request.resolver_match.url_name == 'index' %}
+<li><a href="{% url 'login' %}"> login </a><li>
+<li><a href="{% url 'register' %}"> sign up </a></li>
+{%else%}
+
+{%if user.is_authenticated and user.is_staff and user.is_superuser%}
+<li><a href="{% url 'index' %}"> Dashboard </a>
+<li><a href="{% url 'product' %}"> products </a></li>
+<li><a href="{% url 'orders' %}"> orders </a></li>
+<li><a href="{% url 'logout' %}"> logout </a></li>
+
+{%elif user.is_authenticated%}
+<li><a href="{% url 'index' %}"> Home page </a></li>
+<li><a href="{% url 'product' %}"> products </a></li>
+<li><a href="{% url 'orders' %}"> orders </a></li>
+<li><a href="{% url 'logout' %}"> logout </a></li>
+{%else%}
+<li><a href="{% url 'register' %}"> sign up </a></li>
+<li><a href="{% url 'login' %}"> login </a></li>
+{%endif%}
+{%endif%}
+{%block content%}
+{%endblock%}
+<footer>
+<p> Copy 2026 Inventory App,inc.</p>
+</footer>
+<img src="{% static "images/picture1.jpg" %}" width="400" height="200">
+
+</body>
+</html>

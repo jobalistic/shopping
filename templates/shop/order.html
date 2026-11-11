@@ -1,0 +1,65 @@
+{%extends 'shop/base.html'%}
+{%block title%} {{title}} {%endblock%}
+{%block content%}
+<table> <thead> <tr>
+<th> Ordered Products </th>
+<th> Created by </th>
+<th> Quantity </th>
+<th> Order Date </th>
+</tr> <thead>
+{%if user.is_staff and user.is_superuser%}
+<tbody>
+{%for order in orders%}
+<tr>
+<th> {{order.products}} </th>
+<th> {{order.created_by.username}} </th>
+<th> {{order.order_quantity}} </th>
+<th> {{order.date}} </th>
+</tr>
+{%endfor%}
+</tbody>
+{%else%}
+<tbody>
+{%for order in orders%}
+{%if user.username is order.created_username%}
+<tr>
+<td> {{order.product}} </td>
+<td> {{order.created_by.username}} </td>
+<td> {{order.order_quantity}} </td>
+<td> {{order.date}} </td>
+</tr>
+{%endif%}
+{%endfor%}
+</tbody>
+{%endif%}
+</table>
+<form method="post">
+<h4> Create a new order </h4>
+<hr>
+{%csrf_token%}
+{{form.as_table}}
+<br>
+<button type="submit"> Order </button>
+</form>
+{%endblock%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
